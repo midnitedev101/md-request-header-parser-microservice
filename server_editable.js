@@ -8,7 +8,8 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
-const os = require('os');
+var Sniffr = require("sniffr");
+var s = new Sniffr();
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
@@ -40,9 +41,15 @@ app.route('/')
     })
 
 app.get('/api/whoami', function(req, res) {
-  var nVer = navigator.appVersion;
-  var softwareString = '' + process.platform + ';' + os.arch();
-  console.log(softwareString);  
+  //var nVer = navigator.appVersion;
+  //var softwareString = '' + process.platform + ';' + os.arch();
+  //console.log(req.headers['user-agent']); 
+  //s.sniff(req.headers['user-agent']);
+  //console.log(s.os);
+  //console.log(s.browser);
+  //console.log(s.device);
+  console.log(req.)
+  console.log(req.connection.remoteAddress);
 });
 
 // Respond not found to all the wrong routes
