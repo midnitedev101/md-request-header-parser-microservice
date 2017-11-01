@@ -48,11 +48,27 @@ app.get('/api/whoami', function(req, res) {
   //console.log(s.os);
   //console.log(s.browser);
   //console.log(s.device);
-  console.log(typeof req.headers['user-agent']);
-  console.log(req.connection.remoteAddress);
-  console.log(req.headers['accept-language']);
-  var reqHdrObj = {ipaddress: req.headers['x-forwarded-for'], software: req.headers['user-agent'], language: req.headers['accept-language']};
-  res.send(reqHdrObj);
+  // console.log(typeof req.headers['user-agent']);
+  // console.log(req.connection.remoteAddress);
+  // console.log(req.headers['accept-language']);
+  
+  var swMatches = '';
+  var ipAddress = '';
+  var language = '';
+  
+  swMatches = (req.headers['user-agent']).match(/\((.*?)\)/);
+  var ipaddress = (req.headers['x-forwarded-for']).split(',');
+  // console.log(ipaddress[0]);
+  var language = (req.headers['accept-language']).split(',');
+  console.log(language[0]);
+  // console.log(swMatches);
+  if (swMatches) {
+      var software = swMatches[1];
+      var reqHdrObj = {ipaddress: req.headers['x-forwarded-for'], software: software, language: req.headers['accept-language']};
+      res.send(reqHdrObj);
+  }
+  
+  // var reqHdrObj = {ipaddress: req.headers['x-forwarded-for'], software: req.headers['user-agent'], language: req.headers['accept-language']};
 });
 
 // Respond not found to all the wrong routes
