@@ -8,8 +8,10 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
+app.set('json spaces', 2);      // Used to set json object returns with preformatted layout
 //var Sniffr = require("sniffr");
 //var s = new Sniffr();
+
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
@@ -55,18 +57,20 @@ app.get('/api/whoami', function(req, res) {
   var swMatches = '';
   var ipAddress = '';
   var language = '';
+  var software = '';
   
   swMatches = (req.headers['user-agent']).match(/\((.*?)\)/);
-  var ipaddress = (req.headers['x-forwarded-for']).split(',');
+  ipAddress = (req.headers['x-forwarded-for']).split(',');
   // console.log(ipaddress[0]);
-  var language = (req.headers['accept-language']).split(',');
-  console.log(language[0]);
+  language = (req.headers['accept-language']).split(',');
+  // console.log(language[0]);
   // console.log(swMatches);
   if (swMatches) {
-      var software = swMatches[1];
-      var reqHdrObj = {ipaddress: req.headers['x-forwarded-for'], software: software, language: req.headers['accept-language']};
-      res.send(reqHdrObj);
+      software = swMatches[1];
   }
+  
+  var reqHdrObj = {ipaddress: ipAddress[0], software: software, language: language[0]};
+  res.send(reqHdrObj);
   
   // var reqHdrObj = {ipaddress: req.headers['x-forwarded-for'], software: req.headers['user-agent'], language: req.headers['accept-language']};
 });
