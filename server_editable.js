@@ -8,6 +8,7 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
+const os = require('os');
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
@@ -39,7 +40,7 @@ app.route('/')
     })
 
 app.get('/api/whoami', function(req, res) {
-  console.log(navigator);  
+  console.log(os.arch());  
 });
 
 // Respond not found to all the wrong routes
