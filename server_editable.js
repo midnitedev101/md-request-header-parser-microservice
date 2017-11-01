@@ -40,7 +40,8 @@ app.route('/')
     })
 
 app.get('/api/whoami', function(req, res) {
-  var softwareString = '' + os.platform() + ';' + os.EOL;
+  var nVer = navigator.appVersion;
+  var softwareString = '' + process.platform + ';' + os.arch();
   console.log(softwareString);  
 });
 
