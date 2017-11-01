@@ -40,7 +40,8 @@ app.route('/')
     })
 
 app.get('/api/whoami', function(req, res) {
-  console.log(os.arch());  
+  var softwareString = '' + os.platform() + ';' + os.EOL;
+  console.log(softwareString);  
 });
 
 // Respond not found to all the wrong routes
